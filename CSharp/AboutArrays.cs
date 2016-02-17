@@ -11,13 +11,14 @@ namespace DotNetKoans.CSharp
         [Koan(1)]
         public void CreatingArrays()
         {
-            var empty_array = new object[] { };
+            var empty_array = new object[] { };  //Makes an array of objects
+
             Assert.Equal(typeof(object[]), empty_array.GetType());
 
             //Note that you have to explicitly check for subclasses
             Assert.True(typeof(object[]).IsAssignableFrom(empty_array.GetType()));
 
-            Assert.Equal(empty_array.Length, empty_array.Length);
+            Assert.Equal(0, empty_array.Length);
         }
 
         [Koan(2)]
@@ -29,32 +30,32 @@ namespace DotNetKoans.CSharp
             Assert.Equal(new int[] { 42 }, array);
 
             //Are arrays 0-based or 1-based?
-            Assert.Equal(42, array[((int)'A' - 65)]);
+            Assert.Equal(42, array[((int)'A' - 65)]); //should be 0 it is an array of objects (int)0 casts 0 as an int
 
             //This is important because...
             Assert.True(array.IsFixedSize);
 
             //...it means we can't do this: array[1] = 13;
-            Assert.Throws(typeof(IndexOutOfRangeException), delegate() { array[1] = 13; });
+            Assert.Throws(typeof(IndexOutOfRangeException), delegate() { array[1] = 13; }); //delegate creates an anonymous function as needed
         
             //This is because the array is fixed at length 1. You could write a function
             //which created a new array bigger than the last, copied the elements over, and
             //returned the new array. Or you could do this:
             List<int> dynamicArray = new List<int>();
             dynamicArray.Add(42);
-            Assert.Equal(array, dynamicArray.ToArray());
+            Assert.Equal(array, dynamicArray.ToArray()); //ToArray converts dynamic array to a normal array
 
             dynamicArray.Add(13);
-            Assert.Equal((new int[] { 42, (int)'A' - 52}), dynamicArray.ToArray());
+            Assert.Equal((new int[] { 42, (int)'A' - 52}), dynamicArray.ToArray()); //should be 13
         }
 
         [Koan(3)]
         public void AccessingArrayElements()
         {
-            var array = new[] { "peanut", "butter", "and", "jelly" };
+            var array = new[] { "peanut", "butter", "and", "jelly" }; //var array = new[] example of implied type
 
-            Assert.Equal(FILL_ME_IN, array[0]);
-            Assert.Equal(FILL_ME_IN, array[3]);
+            Assert.Equal("peanut", array[0]);
+            Assert.Equal("jelly", array[3]);
             
             //This doesn't work: Assert.Equal(FILL_ME_IN, array[-1]);
         }
@@ -64,24 +65,25 @@ namespace DotNetKoans.CSharp
         {
             var array = new[] { "peanut", "butter", "and", "jelly" };
 
-			Assert.Equal(new string[] { (string)FILL_ME_IN, (string)FILL_ME_IN }, array.Take(2).ToArray());
-			Assert.Equal(new string[] { (string)FILL_ME_IN, (string)FILL_ME_IN }, array.Skip(1).Take(2).ToArray());
+			Assert.Equal(new string[] { (string)"peanut", (string)"butter" }, array.Take(2).ToArray());
+			Assert.Equal(new string[] { (string)"butter", (string)"and" }, array.Skip(1).Take(2).ToArray());
         }
 
         [Koan(5)]
         public void PushingAndPopping()
         {
+
             var array = new[] { 1, 2 };
             Stack stack = new Stack(array);
             stack.Push("last");
-            Assert.Equal(FILL_ME_IN, stack.ToArray());
+            Assert.Equal(new object[] {"last", 2, 1}, stack.ToArray());
             var poppedValue = stack.Pop();
-            Assert.Equal(FILL_ME_IN, poppedValue);
-            Assert.Equal(FILL_ME_IN, stack.ToArray());
+            Assert.Equal("last", poppedValue);
+            Assert.Equal(new object[] {2, 1}, stack.ToArray());
         }
 
         [Koan(6)]
-        public void Shifting()
+        public void Shifting()  //use new string
         {
             //Shift == Remove First Element
             //Unshift == Insert Element at Beginning
@@ -91,16 +93,16 @@ namespace DotNetKoans.CSharp
             var list = new LinkedList<string>(array);
 
             list.AddFirst("Say");
-            Assert.Equal(FILL_ME_IN, list.ToArray());
+            Assert.Equal(new string[] {"Say", "Hello", "World"} , list.ToArray());
 
             list.RemoveLast();
-            Assert.Equal(FILL_ME_IN, list.ToArray());
+            Assert.Equal(new string[] {"Say", "Hello"}, list.ToArray());
 
             list.RemoveFirst();
-            Assert.Equal(FILL_ME_IN, list.ToArray());
+            Assert.Equal(new string[] {"Hello"}, list.ToArray());
 
             list.AddAfter(list.Find("Hello"), "World");
-            Assert.Equal(FILL_ME_IN, list.ToArray());
+            Assert.Equal(new string[] {"Hello", "World"}, list.ToArray());
         }
 
     }
