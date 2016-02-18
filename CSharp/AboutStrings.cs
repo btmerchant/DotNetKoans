@@ -213,19 +213,20 @@ broken line";
 			strBuilder.Append("The ");
 			strBuilder.Append("quick ");
 			strBuilder.Append("brown ");
-			strBuilder.Append("fox ");
+            strBuilder.Append("fox ");
 			strBuilder.Append("jumped ");
 			strBuilder.Append("over ");
 			strBuilder.Append("the ");
 			strBuilder.Append("lazy ");
 			strBuilder.Append("dog.");
             var str = strBuilder.ToString();
-            Assert.Equal(FILL_ME_IN, str);
+            Assert.Equal("The quick brown fox jumped over the lazy dog.", str);
+            // The quick brownjumped over thelazy dog.
 
             //String.Format and StringBuilder will be more efficent that concatenation. Prefer them.
         }
 
-		[Koan(22)]
+        [Koan(22)]
 		public void StringBuilderCanUseFormatAsWell()
 		{
 			var strBuilder = new System.Text.StringBuilder();
@@ -233,43 +234,43 @@ broken line";
 			strBuilder.AppendFormat("{0} {1} {2}", "jumped", "over", "the");
 			strBuilder.AppendFormat("{0} {1}.", "lazy", "dog");
 			var str = strBuilder.ToString();
-			Assert.Equal(FILL_ME_IN, str);
+			Assert.Equal("The quick brownjumped over thelazy dog.", str);
 		}
 		
         [Koan(23)]
         public void LiteralStringsInterpretsEscapeCharacters()
         {
             var str = "\n";
-            Assert.Equal(FILL_ME_IN, str.Length);
+            Assert.Equal(1, str.Length);
         }
 
         [Koan(24)]
         public void VerbatimStringsDoNotInterpretEscapeCharacters()
         {
             var str = @"\n";
-            Assert.Equal(FILL_ME_IN, str.Length);
+            Assert.Equal(2, str.Length);
         }
 
         [Koan(25)]
         public void VerbatimStringsStillDoNotInterpretEscapeCharacters()
         {
             var str = @"\\\";
-            Assert.Equal(FILL_ME_IN, str.Length);
+            Assert.Equal(3, str.Length);
         }
 
         [Koan(28)]
         public void YouCanGetASubstringFromAString()
         {
             var str = "Bacon, lettuce and tomato";
-            Assert.Equal(FILL_ME_IN, str.Substring(19));
-            Assert.Equal(FILL_ME_IN, str.Substring(7, 3));
+            Assert.Equal("tomato", str.Substring(19));
+            Assert.Equal("let", str.Substring(7, 3));
         }
 
         [Koan(29)]
         public void YouCanGetASingleCharacterFromAString()
         {
             var str = "Bacon, lettuce and tomato";
-            Assert.Equal(FILL_ME_IN, str[0]);
+            Assert.Equal("B", str[0].ToString());
         }
 
         [Koan(30)]
@@ -277,7 +278,7 @@ broken line";
         {
             Assert.Equal(97, 'a');
             Assert.Equal(98, 'b');
-            Assert.Equal(FILL_ME_IN, 'b' == ('a' + 1));
+            Assert.Equal(true, 'b' == ('a' + 1));
         }
 
         [Koan(31)]
@@ -285,7 +286,7 @@ broken line";
         {
             var str = "Sausage Egg Cheese";
             string[] words = str.Split();
-            Assert.Equal(new[] { FILL_ME_IN }, words);
+            Assert.Equal(new[] {"Sausage", "Egg", "Cheese"}, words);
         }
 
         [Koan(32)]
